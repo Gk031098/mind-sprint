@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Four quick brain puzzles for a short break at work.">
+<title>Mind Sprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{
+  --paper:#EDF1F6; --grid:rgba(27,42,74,.07); --card:#FFFFFF; --ink:#1B2A4A; --muted:#5B6782;
+  --line:#D5DCE7; --accent:#3346C4; --accent-ink:#FFFFFF; --hi:#FFD43B; --good:#1F8A4C; --bad:#C8372D;
+  --c-red:#D63A2F; --c-blue:#2F5FD6; --c-green:#1E8E4E; --c-purple:#8A3FC4;
+  --shadow:0 1px 0 rgba(27,42,74,.06),0 8px 24px -12px rgba(27,42,74,.25);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#10151F; --grid:rgba(200,215,240,.05); --card:#1A2130; --ink:#E6ECF7; --muted:#98A3BB;
+    --line:#2C3547; --accent:#8C9CFF; --accent-ink:#0E1426; --hi:#F5C84B; --good:#4CC784; --bad:#FF7A6E;
+    --c-red:#FF6B5E; --c-blue:#6E9BFF; --c-green:#4FD08A; --c-purple:#C08CFF;
+    --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#10151F; --grid:rgba(200,215,240,.05); --card:#1A2130; --ink:#E6ECF7; --muted:#98A3BB;
+  --line:#2C3547; --accent:#8C9CFF; --accent-ink:#0E1426; --hi:#F5C84B; --good:#4CC784; --bad:#FF7A6E;
+  --c-red:#FF6B5E; --c-blue:#6E9BFF; --c-green:#4FD08A; --c-purple:#C08CFF;
+  --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;padding:24px 16px 40px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:12px 20px;font-weight:700;font-size:16px}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn:hover{filter:brightness(1.07)}
+
+/* header */
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.brand h1{font-size:clamp(34px,6vw,52px);font-weight:800;line-height:1}
+.brand h1 mark{background:linear-gradient(transparent 58%,var(--hi) 58%);color:inherit;padding:0 2px}
+.brand p{margin:8px 0 0;color:var(--muted);max-width:46ch}
+.overall{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow);min-width:180px}
+.overall .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.overall .val{font-size:28px;font-weight:700}
+.overall .lvl{font-size:14px;color:var(--accent);font-weight:700}
+
+/* home */
+.full{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;background:var(--ink);color:var(--paper);border-radius:16px;padding:18px 20px}
+.full h2{font-size:22px}
+.full p{margin:2px 0 0;opacity:.75;font-size:14px}
+.full .btn{background:var(--hi);color:#1B2A4A}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:14px}
+.game{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;text-align:left;box-shadow:var(--shadow);transition:transform .15s,border-color .15s}
+.game:hover{transform:translateY(-2px);border-color:var(--accent)}
+.game .glyph{width:44px;height:44px;border-radius:10px;background:var(--paper);display:grid;place-items:center;font-family:"JetBrains Mono",monospace;font-weight:700;font-size:18px;color:var(--accent)}
+.game h3{font-size:19px}
+.game p{margin:0;font-size:14px;color:var(--muted);flex:1}
+.game .best{display:flex;justify-content:space-between;font-size:13px;border-top:1px dashed var(--line);padding-top:8px;color:var(--muted)}
+.game .best b{color:var(--ink)}
+.levelbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px}
+.levelbar .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.seg{display:inline-flex;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:4px;gap:4px;box-shadow:var(--shadow)}
+.seg button{border:0;background:transparent;border-radius:8px;padding:8px 16px;font-weight:700;font-size:15px;color:var(--muted);display:inline-flex;align-items:center;gap:7px}
+.seg button .pips{display:inline-flex;gap:2px}
+.seg button .pips i{width:5px;height:12px;border-radius:2px;background:currentColor;opacity:.25}
+.seg button .pips i.on{opacity:1}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.levelbar .note{font-size:14px;color:var(--muted);flex:1;min-width:200px}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:var(--hi);color:#1B2A4A;vertical-align:2px}
+.hist{background:var(--card);border:1.5px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.hhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.hhead h2{font-size:22px}
+.hhead .sub{font-size:13px;color:var(--muted);margin-top:2px}
+.hist .seg{box-shadow:none;background:var(--paper)}
+.hist .seg button{padding:6px 12px;font-size:14px}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:transparent;border-radius:99px;padding:4px 12px;font-size:13px;font-weight:700;color:var(--muted)}
+.chip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+.tbl-wrap{overflow-x:auto}
+table.tbl{width:100%;border-collapse:collapse;font-size:15px;min-width:460px}
+.tbl th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:left;font-weight:700;padding:6px 8px;border-bottom:1.5px solid var(--line)}
+.tbl td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .num{text-align:right;font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;font-weight:700}
+.tbl th.num{font-family:inherit}
+.who{display:flex;align-items:center;gap:8px;min-width:0}
+.who img{width:24px;height:24px;border-radius:50%;flex:none}
+.who .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.you{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--hi);color:#1B2A4A;border-radius:99px;padding:1px 6px}
+.rank{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--muted);width:32px}
+.rank.top{color:var(--accent)}
+.lv{font-size:12px;font-weight:700;color:var(--muted)}
+.when{color:var(--muted);font-size:13px;white-space:nowrap}
+.empty{color:var(--muted);font-size:14px;padding:14px 0;text-align:center}
+.nickform{display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--paper);border-radius:12px;padding:10px 12px}
+.nickform label{font-size:14px;font-weight:700}
+.nickform input{font:inherit;font-size:15px;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:7px 10px;flex:1;min-width:0;max-width:260px}
+.nickform input:focus-visible{outline:3px solid var(--hi);outline-offset:1px}
+.nickform .btn{padding:8px 14px;font-size:14px}
+.nickform .ok{font-size:13px;color:var(--good);font-weight:700}
+.tip{font-size:13px;color:var(--muted);text-align:center;margin:0}
+
+/* play */
+.panel{background:var(--card);border:1.5px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:18px}
+.phead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px}
+.phead h2{font-size:24px}
+.phead .step{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.stats{display:flex;gap:16px;font-size:14px;color:var(--muted)}
+.stats b{color:var(--ink);font-size:18px}
+.bar{height:8px;border-radius:99px;background:var(--paper);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:100%;transition:width .1s linear}
+.bar.low i{background:var(--bad)}
+.stage{min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center}
+.q{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:clamp(34px,8vw,56px);line-height:1.1}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;max-width:420px}
+.opt{background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:16px 10px;font-family:"JetBrains Mono",monospace;font-size:22px;font-weight:700;transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent)}
+.opt.ok{background:var(--good);color:#fff;border-color:var(--good)}
+.opt.no{background:var(--bad);color:#fff;border-color:var(--bad)}
+.word{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(48px,12vw,84px);letter-spacing:.02em}
+.inks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;max-width:420px}
+.ink{border:0;border-radius:12px;padding:18px 10px;font-weight:700;font-size:17px;color:#fff}
+.help{font-size:14px;color:var(--muted);margin:0;max-width:48ch}
+.flash{height:22px;font-weight:700;font-size:15px}
+.flash.ok{color:var(--good)} .flash.no{color:var(--bad)}
+.grid{display:grid;gap:8px;width:min(100%,340px);aspect-ratio:1;max-width:100%}
+.cell{border:1.5px solid var(--line);border-radius:10px;background:var(--paper);transition:background .15s,transform .1s;padding:0}
+.cell.lit{background:var(--accent);border-color:var(--accent)}
+.cell.hit{background:var(--good);border-color:var(--good)}
+.cell.miss{background:var(--bad);border-color:var(--bad)}
+.cell:disabled{cursor:default}
+.seq{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.seq span{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:clamp(22px,5vw,32px);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;min-width:58px}
+.seq span.qm{border-style:dashed;border-color:var(--accent);color:var(--accent)}
+.ready .big{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:80px;color:var(--accent)}
+
+/* results */
+.res{display:flex;flex-direction:column;gap:18px}
+.score-hero{display:flex;flex-wrap:wrap;align-items:center;gap:20px}
+.dial{width:132px;height:132px;flex:none}
+.score-hero h2{font-size:30px}
+.score-hero p{margin:4px 0 0;color:var(--muted);max-width:44ch}
+.rows{display:flex;flex-direction:column;gap:10px}
+.row{display:grid;grid-template-columns:130px 1fr 48px;align-items:center;gap:12px;font-size:15px}
+.row .track{height:10px;background:var(--paper);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.row .track i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.row .n{text-align:right;font-weight:700}
+.row.pb .n::after{content:" ★";color:var(--hi)}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+@media (max-width:480px){.row{grid-template-columns:96px 1fr 40px}.stats{gap:10px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>Mind <mark>Sprint</mark></h1>
+      <p>Four quick puzzles that wake your brain up when work gets stuck. Play one for a minute, or take the full check in about four.</p>
+    </div>
+    <div class="overall" aria-live="polite">
+      <div class="lbl">Your best brain score</div>
+      <div class="val mono" id="bestOverall">—</div>
+      <div class="lvl" id="bestLevel">Take the full check to find out</div>
+    </div>
+  </header>
+  <main id="app"></main>
+</div>
+
+<script>
+(() => {
+const app=document.getElementById('app');
+const $=(h)=>{const t=document.createElement('template');t.innerHTML=h.trim();return t.content.firstElementChild;};
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+const GAMES={
+  math:{name:'Quick Math',glyph:'7×8',desc:'Solve as many sums as you can before time runs out. Gets harder as you go.',skill:'Speed'},
+  clash:{name:'Colour Clash',glyph:'Aa',desc:'Tap the colour of the ink, not the word. Trains focus and self-control.',skill:'Focus'},
+  memory:{name:'Memory Grid',glyph:'▦',desc:'Watch the squares light up, then tap them back. The pattern grows.',skill:'Memory'},
+  pattern:{name:'Next Number',glyph:'2,4,?',desc:'Spot the rule in a number series and pick what comes next.',skill:'Logic'}
+};
+const ORDER=['math','clash','memory','pattern'];
+const LEVELS=[[0,'Warming up','Your brain is still booting. A glass of water and a stretch will help.'],
+  [35,'Steady','Solid baseline. You are awake and on task.'],
+  [50,'Sharp','Good speed and accuracy. Ready to get back to work.'],
+  [65,'Quick thinker','Well above a casual warm-up. Nicely focused.'],
+  [80,'Brilliant','Excellent across the board. Your brain is fully switched on.']];
+const levelFor=s=>{let l=LEVELS[0];for(const x of LEVELS)if(s>=x[0])l=x;return l;};
+
+/* difficulty */
+const DIFFS={
+  easy:{name:'Easy',pips:1,note:'More time, smaller numbers, three colours, extra lives. A gentle warm-up.',
+    math:{time:60,start:0,max:1},clash:{time:60,colors:3,shuffle:false},
+    memory:{start:2,lives:3,show:1300},pattern:{time:30,pool:'easy'}},
+  medium:{name:'Medium',pips:2,note:'The standard check. Puzzles speed up as you get them right.',
+    math:{time:45,start:0,max:4},clash:{time:45,colors:4,shuffle:false},
+    memory:{start:3,lives:2,show:900},pattern:{time:20,pool:'medium'}},
+  hard:{name:'Hard',pips:3,note:'Less time, bigger numbers, buttons that move, one life. For when you want a real challenge.',
+    math:{time:40,start:2,max:5},clash:{time:35,colors:4,shuffle:true},
+    memory:{start:4,lives:1,show:650},pattern:{time:12,pool:'hard'}}
+};
+let diff='medium';
+
+/* storage */
+let best={};
+try{best=JSON.parse(localStorage.getItem('mind-sprint-best')||'{}')||{};}catch(e){best={};}
+if(!best.easy&&!best.medium&&!best.hard){best={easy:{},medium:{...best},hard:{}};} // move older scores to Medium
+for(const d in DIFFS)best[d]=best[d]||{};
+try{const d=localStorage.getItem('mind-sprint-diff');if(DIFFS[d])diff=d;}catch(e){}
+const save=()=>{try{localStorage.setItem('mind-sprint-best',JSON.stringify(best));localStorage.setItem('mind-sprint-diff',diff);}catch(e){}};
+
+function renderBestOverall(){
+  const v=best[diff].overall;
+  document.querySelector('.overall .lbl').textContent=`Best brain score · ${DIFFS[diff].name}`;
+  document.getElementById('bestOverall').textContent=v!=null?v+' / 100':'—';
+  document.getElementById('bestLevel').textContent=v!=null?levelFor(v)[1]:'Take the full check to find out';
+}
+/* ---------- shared scoreboard (Supabase) ---------- */
+// Paste your Supabase project URL and publishable (anon) key here. Leave empty to keep scores in each browser only.
+const SUPABASE_URL = 'https://jtoduzwytfxqgqfywzah.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_DHe5W32jd8NqZtWNUaLL5A_Tj-gMWYz';
+const online = !!(SUPABASE_URL && SUPABASE_KEY);
+const API = SUPABASE_URL.replace(/\/+$/,'') + '/rest/v1';
+const hdrs = () => {
+  const h = {'apikey': SUPABASE_KEY, 'Content-Type': 'application/json'};
+  if (SUPABASE_KEY.startsWith('eyJ')) h['Authorization'] = 'Bearer ' + SUPABASE_KEY; // legacy anon key
+  return h;
+};
+
+let recent=[],fulls=[],histError='',loadedOnce=false;
+let localHist=[];
+try{localHist=JSON.parse(localStorage.getItem('mind-sprint-history')||'[]')||[];}catch(e){localHist=[];}
+let histTab='top',histWho='all';
+let myNick='',teamCode='',pending=null;
+try{myNick=(localStorage.getItem('mind-sprint-nick')||'').slice(0,30);teamCode=localStorage.getItem('mind-sprint-code')||'';}catch(e){}
+const cleanNick=s=>String(s||'').replace(/\s+/g,' ').trim().slice(0,30);
+const keyOf=s=>cleanNick(s).toLowerCase();
+const fromRow=r=>({uid:r.player_key,nick:r.player,mode:r.mode,diff:r.diff,score:r.score,at:Date.parse(r.created_at)});
+
+async function loadBoard(){
+  if(!online)return;
+  try{
+    const [a,b]=await Promise.all([
+      fetch(`${API}/plays?select=player,player_key,mode,diff,score,created_at&order=created_at.desc&limit=60`,{headers:hdrs()}),
+      fetch(`${API}/plays?select=player,player_key,mode,diff,score,created_at&mode=eq.full&order=score.desc&limit=500`,{headers:hdrs()})
+    ]);
+    if(!a.ok||!b.ok)throw new Error(a.status+'/'+b.status);
+    recent=(await a.json()).map(fromRow);fulls=(await b.json()).map(fromRow);
+    histError='';loadedOnce=true;
+  }catch(e){histError='Could not reach the scoreboard. Check your internet connection, or the Supabase settings in the page.';}
+  renderHistory();
+}
+function connect(){
+  if(!online)return;
+  loadBoard();
+  setInterval(()=>{if(!document.hidden&&document.getElementById('histBody'))loadBoard();},20000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadBoard();});
+}
+
+async function sendRemote(row){
+  const r=await fetch(`${API}/rpc/add_play`,{method:'POST',headers:hdrs(),body:JSON.stringify({
+    p_code:teamCode,p_player:myNick,p_mode:row.mode,p_diff:row.diff,p_score:row.score,p_parts:row.parts||{}})});
+  if(!r.ok){const t=await r.text();throw new Error(/team code/i.test(t)?'code':'save');}
+}
+async function recordPlay(entry){
+  const row={...entry,at:Date.now()};
+  localHist.unshift({...row,uid:'me'});localHist=localHist.slice(0,60);
+  try{localStorage.setItem('mind-sprint-history',JSON.stringify(localHist));}catch(e){}
+  if(!online)return 'local';
+  if(!myNick||!teamCode){pending=row;return 'need-name';}
+  try{await sendRemote(row);pending=null;histError='';loadBoard();return 'saved';}
+  catch(e){pending=row;histError=e.message==='code'?'That team code is not right, so your score was not added to the board. Check it in the name box.':'Your score could not be saved to the board. Try again later.';return e.message==='code'?'bad-code':'error';}
+}
+async function saveIdentity(name,code){
+  myNick=cleanNick(name);teamCode=String(code||'').trim();
+  try{localStorage.setItem('mind-sprint-nick',myNick);localStorage.setItem('mind-sprint-code',teamCode);}catch(e){}
+  let result='ok';
+  if(online&&pending&&myNick&&teamCode){
+    try{await sendRemote(pending);pending=null;histError='';}
+    catch(e){result=e.message==='code'?'bad-code':'error';histError=result==='bad-code'?'That team code is not right. Ask whoever set up the game for the code.':'Your score could not be saved to the board. Try again later.';}
+  }
+  loadBoard();renderHistory();return result;
+}
+
+function timeAgo(t){
+  const s=(Date.now()-t)/1000;
+  if(s<60)return 'just now';if(s<3600)return Math.floor(s/60)+' min ago';
+  if(s<86400)return Math.floor(s/3600)+' h ago';
+  return new Date(t).toLocaleDateString(undefined,{day:'numeric',month:'short'})+', '+new Date(t).toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function fillNames(root,names){
+  for(const el of root.querySelectorAll('[data-uid]')){
+    const u=el.dataset.uid,mine=u==='me'||(myNick&&u===keyOf(myNick));
+    el.querySelector('.nm').textContent=names[u]||(mine?(myNick||'You'):'Someone');
+    if(mine)el.insertAdjacentHTML('beforeend','<span class="you">You</span>');
+  }
+}
+const whoCell=u=>`<span class="who" data-uid="${esc(u||'')}"><span class="nm"></span></span>`;
+
+function renderHistory(){
+  const body=document.getElementById('histBody');if(!body)return;
+  const note=document.getElementById('histNote');
+  const src=online?recent:localHist;
+  const me=keyOf(myNick);
+  const isMine=r=>r.uid==='me'||(me&&r.uid===me);
+  const names={};for(const r of [...recent,...fulls].sort((a,b)=>b.at-a.at))if(r.uid&&!names[r.uid])names[r.uid]=r.nick;
+  if(online&&!loadedOnce&&!histError){body.innerHTML='<div class="empty">Loading the scoreboard…</div>';}
+  else if(histTab==='top'){
+    const pool=(online?fulls:localHist.filter(r=>r.mode==='full')).filter(r=>r.diff===diff);
+    const byUser=new Map();
+    for(const r of pool){const k=r.uid||'?';const e=byUser.get(k);
+      if(!e)byUser.set(k,{uid:k,best:r.score,n:1});else{e.n++;if(r.score>e.best)e.best=r.score;}}
+    const rows=[...byUser.values()].sort((a,b)=>b.best-a.best).slice(0,10);
+    body.innerHTML=rows.length?`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Player</th><th>Level reached</th><th class="num">Checks</th><th class="num">Best</th></tr></thead><tbody>${
+      rows.map((r,i)=>`<tr><td class="rank${i<3?' top':''}">${i+1}</td><td>${whoCell(r.uid)}</td><td class="lv">${levelFor(r.best)[1]}</td><td class="num" style="font-weight:500">${r.n}</td><td class="num">${r.best}</td></tr>`).join('')
+    }</tbody></table></div>`:`<div class="empty">No full checks on ${DIFFS[diff].name} yet. Be the first on the board.</div>`;
+  }else{
+    const rows=src.filter(r=>histWho==='all'||isMine(r)).slice(0,25);
+    body.innerHTML=rows.length?`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Player</th><th>Played</th><th>Level</th><th class="num">Score</th><th>When</th></tr></thead><tbody>${
+      rows.map(r=>`<tr><td>${whoCell(r.uid)}</td><td>${r.mode==='full'?'<b>Full check</b>':esc((GAMES[r.mode]||{}).name||'Puzzle')}</td><td class="lv">${esc((DIFFS[r.diff]||{}).name||'')}</td><td class="num">${Number(r.score)||0}</td><td class="when">${timeAgo(r.at)}</td></tr>`).join('')
+    }</tbody></table></div>`:`<div class="empty">No games yet. Play any puzzle and it shows up here.</div>`;
+  }
+  fillNames(body,names);
+  note.textContent=histError||(!online?'Scores are saved in this browser only.'
+    :(!myNick||!teamCode)?'Add your name and the team code above so your games are saved to the shared board.'
+    :'Your games are saved to the shared board. Use the same name on any device to keep your history together.');
+}
+
+const pips=d=>`<span class="pips" aria-hidden="true">${[1,2,3].map(i=>`<i class="${i<=DIFFS[d].pips?'on':''}"></i>`).join('')}</span>`;
+
+/* ---------- home ---------- */
+let timers=[];
+const clearTimers=()=>{timers.forEach(t=>{clearTimeout(t);clearInterval(t);});timers=[];};
+function home(){
+  clearTimers();renderBestOverall();
+  app.innerHTML='';
+  const root=$(`<div style="display:flex;flex-direction:column;gap:18px"></div>`);
+  const lb=$(`<section class="levelbar" aria-label="Difficulty"><span class="lbl">Level</span><div class="seg" role="group"></div><span class="note">${DIFFS[diff].note}</span></section>`);
+  for(const d in DIFFS){const b=$(`<button type="button" aria-pressed="${d===diff}">${pips(d)}${DIFFS[d].name}</button>`);
+    b.onclick=()=>{diff=d;save();home();};lb.querySelector('.seg').append(b);}
+  root.append(lb);
+  const full=$(`<section class="full"><div><h2>Full brain check</h2><p>All four puzzles in a row, then your brain score out of 100.</p></div><button class="btn" id="goFull" type="button">Start full check</button></section>`);
+  full.querySelector('button').onclick=()=>runSeries(ORDER.slice());
+  root.append(full);
+  const g=$(`<section class="games" aria-label="Single puzzles"></section>`);
+  for(const k of ORDER){
+    const G=GAMES[k];
+    const b=$(`<button class="game" type="button"><span class="glyph">${G.glyph}</span><h3>${G.name}</h3><p>${G.desc}</p><span class="best"><span>${G.skill}</span><span>Best <b class="mono">${best[diff][k]!=null?best[diff][k]:'—'}</b></span></span></button>`);
+    b.onclick=()=>runSeries([k]);
+    g.append(b);
+  }
+  root.append(g);
+  const hist=$(`<section class="hist" aria-label="Scoreboard">
+    <div class="hhead"><div><h2>Scoreboard</h2><div class="sub" id="histSub"></div></div>
+      <div class="seg" role="group"><button type="button" data-t="top">Top players</button><button type="button" data-t="recent">Recent games</button></div></div>
+    <form class="nickform" id="nickForm"><label for="nickInput">Your name</label><input id="nickInput" maxlength="30" placeholder="e.g. Auji" autocomplete="nickname"><label for="codeInput">Team code</label><input id="codeInput" maxlength="40" placeholder="Ask the organiser" autocomplete="off" style="max-width:160px"><button class="btn" type="submit">Save</button><span class="ok" id="nickOk" hidden>Saved</span></form>
+    <div class="filters" id="histFilters"><button class="chip" type="button" data-w="all">Everyone</button><button class="chip" type="button" data-w="me">Only me</button></div>
+    <div id="histBody"></div>
+    <p class="tip" id="histNote" style="text-align:left"></p></section>`);
+  const sync=()=>{
+    hist.querySelectorAll('[data-t]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===histTab));
+    hist.querySelectorAll('[data-w]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.w===histWho));
+    hist.querySelector('#histFilters').hidden=histTab!=='recent';
+    hist.querySelector('#histSub').textContent=histTab==='top'?`Best full-check score per person · ${DIFFS[diff].name}`:'Latest games from every level';
+    renderHistory();};
+  hist.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{histTab=b.dataset.t;sync();});
+  hist.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{histWho=b.dataset.w;sync();});
+  const nf=hist.querySelector('#nickForm'),ni=hist.querySelector('#nickInput'),ci=hist.querySelector('#codeInput');
+  if(!online){ci.previousElementSibling.hidden=true;ci.hidden=true;}
+  ni.value=myNick;ci.value=teamCode;
+  nf.addEventListener('submit',async e=>{e.preventDefault();const r=await saveIdentity(ni.value,online?ci.value:'');ni.value=myNick;
+    const ok=hist.querySelector('#nickOk');ok.textContent=r==='bad-code'?'Wrong team code':'Saved';ok.style.color=r==='ok'?'':'var(--bad)';ok.hidden=false;setTimeout(()=>ok.hidden=true,2500);});
+  root.append(hist);
+  root.append($(`<p class="tip">Tip: play the full check before and after lunch and compare.</p>`));
+  app.append(root);sync();
+}
+
+/* ---------- series runner ---------- */
+function runSeries(list){
+  const results={};let i=0;
+  const next=()=>{
+    if(i>=list.length)return showResults(results,list.length>1);
+    const k=list[i];
+    countdown(k,i,list.length,()=>PLAY[k](score=>{results[k]=score;i++;next();},i,list.length));
+  };
+  next();
+}
+function panel(k,idx,total,extraStats){
+  app.innerHTML='';
+  const p=$(`<section class="panel">
+    <div class="phead"><div><div class="step">${total>1?`Puzzle ${idx+1} of ${total} · `:''}${GAMES[k].skill} · ${DIFFS[diff].name}</div><h2>${GAMES[k].name}</h2></div>
+    <div class="stats">${extraStats||''}<button class="btn ghost" type="button" id="quit" style="padding:6px 12px;font-size:14px">Quit</button></div></div>
+    <div class="bar" id="bar"><i></i></div>
+    <div class="stage" id="stage"></div></section>`);
+  p.querySelector('#quit').onclick=home;
+  app.append(p);return p;
+}
+function countdown(k,idx,total,go){
+  clearTimers();
+  const p=panel(k,idx,total);
+  p.querySelector('#bar').hidden=true;
+  const st=p.querySelector('#stage');st.classList.add('ready');
+  st.innerHTML=`<p class="help">${GAMES[k].desc}</p><span class="tag">${DIFFS[diff].name}</span><div class="big" id="cd">3</div>`;
+  let n=3;const cd=st.querySelector('#cd');
+  const t=setInterval(()=>{n--;if(n<=0){clearInterval(t);go();}else cd.textContent=n;},700);timers.push(t);
+}
+function timerBar(p,secs,onEnd){
+  const bar=p.querySelector('#bar'),fill=bar.querySelector('i');const start=performance.now();
+  const t=setInterval(()=>{const left=Math.max(0,1-(performance.now()-start)/(secs*1000));
+    fill.style.width=(left*100)+'%';bar.classList.toggle('low',left<.2);
+    if(left<=0){clearInterval(t);onEnd();}},100);
+  timers.push(t);
+}
+function flash(el,ok,text){el.className='flash '+(ok?'ok':'no');el.textContent=text;}
+
+/* ---------- games ---------- */
+const PLAY={};
+
+PLAY.math=(done,idx,total)=>{
+  clearTimers();
+  const p=panel('math',idx,total,`<span>Correct <b class="mono" id="c">0</b></span><span>Missed <b class="mono" id="w">0</b></span>`);
+  const st=p.querySelector('#stage');let right=0,wrong=0,streak=0,over=false;
+  st.innerHTML=`<div class="q" id="q"></div><div class="opts" id="o"></div><div class="flash" id="f"></div>`;
+  const M=DIFFS[diff].math;
+  const make=()=>{
+    const lvl=Math.min(M.max,M.start+Math.floor(right/4));let a,b,op,ans;
+    const ops=lvl<1?['+','−']:lvl<2?['+','−','×']:['+','−','×','÷'];
+    op=ops[rnd(0,ops.length-1)];
+    const hi=[10,20,40,60,99,199][lvl];
+    if(op==='+'){a=rnd(2,hi);b=rnd(2,hi);ans=a+b;}
+    else if(op==='−'){a=rnd(5,hi+10);b=rnd(1,a);ans=a-b;}
+    else if(op==='×'){a=rnd(2,lvl<3?9:lvl<5?12:19);b=rnd(2,lvl<3?9:15);ans=a*b;}
+    else{b=rnd(2,lvl<5?12:19);ans=rnd(2,12);a=b*ans;}
+    const set=new Set([ans]);
+    while(set.size<4){const d=ans+[-10,-2,-1,1,2,10,3,-3][rnd(0,7)];if(d>=0)set.add(d);}
+    p.querySelector('#q').textContent=`${a} ${op} ${b}`;
+    const o=p.querySelector('#o');o.innerHTML='';
+    for(const v of shuffle([...set])){const b2=$(`<button class="opt" type="button">${v}</button>`);
+      b2.onclick=()=>{if(over)return;const ok=v===ans;
+        if(ok){right++;streak++;}else{wrong++;streak=0;}
+        b2.classList.add(ok?'ok':'no');p.querySelector('#c').textContent=right;p.querySelector('#w').textContent=wrong;
+        flash(p.querySelector('#f'),ok,ok?(streak>=3?`${streak} in a row`:'Correct'):`It was ${ans}`);
+        setTimeout(()=>!over&&make(),ok?160:450);};
+      o.append(b2);}
+  };
+  make();
+  timerBar(p,M.time,()=>{over=true;done(Math.max(0,Math.min(100,Math.round((right-wrong*.5)*5))));});
+};
+
+PLAY.clash=(done,idx,total)=>{
+  clearTimers();
+  const p=panel('clash',idx,total,`<span>Correct <b class="mono" id="c">0</b></span><span>Missed <b class="mono" id="w">0</b></span>`);
+  const st=p.querySelector('#stage');let right=0,wrong=0,over=false;
+  const S=DIFFS[diff].clash;
+  const C=[['RED','--c-red'],['BLUE','--c-blue'],['GREEN','--c-green'],['PURPLE','--c-purple']].slice(0,S.colors);
+  const last=C.length-1;
+  st.innerHTML=`<p class="help">Tap the <b>ink colour</b> of the word.${S.shuffle?' The buttons change places every turn.':''}</p><div class="word" id="wd"></div><div class="inks" id="o"></div><div class="flash" id="f"></div>`;
+  const o=p.querySelector('#o');let inkIdx=0;const btns=[];
+  if(C.length===3)o.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
+  for(let i=0;i<C.length;i++){const b=$(`<button class="ink" type="button" style="background:var(${C[i][1]})">${C[i][0][0]+C[i][0].slice(1).toLowerCase()}</button>`);
+    b.onclick=()=>{if(over)return;const ok=i===inkIdx;ok?right++:wrong++;
+      p.querySelector('#c').textContent=right;p.querySelector('#w').textContent=wrong;
+      flash(p.querySelector('#f'),ok,ok?'Correct':'Look at the ink, not the word');make();};
+    btns.push(b);o.append(b);}
+  const make=()=>{const w=rnd(0,last);do{inkIdx=rnd(0,last);}while(inkIdx===w&&Math.random()<(S.shuffle?.95:.8));
+    const wd=p.querySelector('#wd');wd.textContent=C[w][0];wd.style.color=`var(${C[inkIdx][1]})`;
+    if(S.shuffle)shuffle(btns.slice()).forEach(b=>o.append(b));};
+  make();
+  timerBar(p,S.time,()=>{over=true;done(Math.max(0,Math.min(100,Math.round((right-wrong)*3.4))));});
+};
+
+PLAY.memory=(done,idx,total)=>{
+  clearTimers();
+  const MM=DIFFS[diff].memory;
+  const p=panel('memory',idx,total,`<span>Squares <b class="mono" id="lv">${MM.start}</b></span><span>Lives <b class="mono" id="lf">${MM.lives}</b></span>`);
+  p.querySelector('#bar').hidden=true;
+  const st=p.querySelector('#stage');let n=MM.start,lives=MM.lives,bestN=2;
+  st.innerHTML=`<p class="help" id="h">Watch closely…</p><div class="grid" id="g"></div><div class="flash" id="f"></div>`;
+  const round=()=>{
+    p.querySelector('#lv').textContent=n;p.querySelector('#lf').textContent=lives;
+    const size=n<=5?3:n<=8?4:5;
+    const g=p.querySelector('#g');g.style.gridTemplateColumns=`repeat(${size},1fr)`;g.innerHTML='';
+    const cells=[];for(let i=0;i<size*size;i++){const c=$(`<button class="cell" type="button" disabled aria-label="Square ${i+1}"></button>`);g.append(c);cells.push(c);}
+    const target=new Set(shuffle([...Array(size*size).keys()]).slice(0,n));
+    p.querySelector('#h').textContent='Watch closely…';p.querySelector('#f').textContent='';
+    const t1=setTimeout(()=>target.forEach(i=>cells[i].classList.add('lit')),400);
+    const t2=setTimeout(()=>{target.forEach(i=>cells[i].classList.remove('lit'));
+      p.querySelector('#h').textContent=`Tap the ${n} squares that lit up`;
+      let found=0,dead=false;
+      cells.forEach((c,i)=>{c.disabled=false;c.onclick=()=>{if(dead||c.classList.contains('hit'))return;
+        if(target.has(i)){c.classList.add('hit');found++;
+          if(found===n){dead=true;bestN=Math.max(bestN,n);flash(p.querySelector('#f'),true,'Perfect');n++;timers.push(setTimeout(round,700));}}
+        else{c.classList.add('miss');dead=true;lives--;target.forEach(j=>cells[j].classList.add('lit'));
+          flash(p.querySelector('#f'),false,lives>0?'Missed one. Try this size again':'Out of lives');
+          timers.push(setTimeout(()=>lives>0?round():done(Math.min(100,Math.max(0,(bestN-2)*12))),1200));}
+      };});
+    },400+MM.show+n*120);
+    timers.push(t1,t2);
+  };
+  round();
+};
+
+PLAY.pattern=(done,idx,total)=>{
+  clearTimers();
+  const Q=6,PT=DIFFS[diff].pattern;let q=0,right=0,over=false;
+  const p=panel('pattern',idx,total,`<span>Question <b class="mono" id="qn">1</b>/${Q}</span><span>Correct <b class="mono" id="c">0</b></span>`);
+  const st=p.querySelector('#stage');
+  st.innerHTML=`<p class="help">What comes next? ${PT.time} seconds per question.</p><div class="seq" id="s"></div><div class="opts" id="o"></div><div class="flash" id="f"></div>`;
+  const gens=[
+    ()=>{const a=rnd(1,20),d=rnd(2,9);return [0,1,2,3,4].map(i=>a+d*i);},
+    ()=>{const a=rnd(60,99),d=rnd(3,8);return [0,1,2,3,4].map(i=>a-d*i);},
+    ()=>{const a=rnd(1,4),r=rnd(2,3);return [0,1,2,3,4].map(i=>a*r**i);},
+    ()=>{const a=rnd(1,9),x=rnd(2,5),y=rnd(6,11);const s=[a];for(let i=1;i<5;i++)s.push(s[i-1]+(i%2?x:y));return s;},
+    ()=>{const o=rnd(1,5);return [0,1,2,3,4].map(i=>(i+o)**2);},
+    ()=>{let a=rnd(1,4),b=rnd(2,6);const s=[a,b];while(s.length<5)s.push(s[s.length-1]+s[s.length-2]);return s;},
+    ()=>{const a=rnd(2,6);const s=[a];for(let i=1;i<5;i++)s.push(s[i-1]+i+1);return s;},
+    ()=>{const a=rnd(2,5);const s=[a];for(let i=1;i<5;i++)s.push(s[i-1]*2+1);return s;},
+    // hard-only
+    ()=>{const o=rnd(1,3);return [0,1,2,3,4].map(i=>(i+o)**3);},
+    ()=>{const a=rnd(2,5),m=rnd(2,3),d=rnd(1,4);const s=[a];for(let i=1;i<5;i++)s.push(i%2?s[i-1]*m:s[i-1]+d);return s;},
+    ()=>{const a=rnd(1,15),d=rnd(2,5);const s=[a];for(let i=1;i<5;i++)s.push(s[i-1]+d*2**(i-1));return s;},
+    ()=>{let a=rnd(1,3),b=rnd(2,4),c=rnd(3,5);const s=[a,b,c];while(s.length<5)s.push(s[s.length-1]+s[s.length-2]+s[s.length-3]);return s;}
+  ];
+  const POOLS={easy:[0,1,2],medium:[0,1,2,3,4,5,6,7],hard:[3,5,7,8,9,10,11]};
+  const pool=POOLS[PT.pool];const order=[];
+  while(order.length<Q)order.push(...shuffle(pool.slice()));order.length=Q;
+  let tick=null;
+  const ask=()=>{
+    if(q>=Q){over=true;return done(Math.round(right/Q*100));}
+    p.querySelector('#qn').textContent=q+1;
+    const s=gens[order[q]]();const ans=s[4];
+    p.querySelector('#s').innerHTML=s.slice(0,4).map(v=>`<span>${v}</span>`).join('')+'<span class="qm">?</span>';
+    const set=new Set([ans]);const diff=Math.abs(s[4]-s[3])||2;
+    while(set.size<4){const d=ans+[-1,1,-2,2][rnd(0,3)]*rnd(1,Math.max(2,Math.ceil(diff/2)));if(d>0)set.add(d);}
+    const o=p.querySelector('#o');o.innerHTML='';let answered=false;
+    const next=(ok,btn)=>{if(answered)return;answered=true;clearInterval(tick);
+      if(ok)right++;p.querySelector('#c').textContent=right;
+      if(btn)btn.classList.add(ok?'ok':'no');
+      [...o.children].forEach(b=>{if(+b.textContent===ans)b.classList.add('ok');});
+      flash(p.querySelector('#f'),ok,ok?'Correct':`Answer: ${ans}`);
+      q++;timers.push(setTimeout(ask,ok?600:1300));};
+    for(const v of shuffle([...set])){const b=$(`<button class="opt" type="button">${v}</button>`);b.onclick=()=>next(v===ans,b);o.append(b);}
+    p.querySelector('#f').textContent='';
+    const bar=p.querySelector('#bar'),fill=bar.querySelector('i');const start=performance.now();
+    tick=setInterval(()=>{const left=Math.max(0,1-(performance.now()-start)/(PT.time*1000));fill.style.width=left*100+'%';bar.classList.toggle('low',left<.2);if(left<=0)next(false,null);},100);
+    timers.push(tick);
+  };
+  ask();
+};
+
+/* ---------- results ---------- */
+function dial(v){
+  const r=54,c=2*Math.PI*r,off=c*(1-v/100);
+  return `<svg class="dial" viewBox="0 0 132 132" role="img" aria-label="Score ${v} out of 100">
+    <circle cx="66" cy="66" r="${r}" fill="none" stroke="var(--line)" stroke-width="12"/>
+    <circle cx="66" cy="66" r="${r}" fill="none" stroke="var(--accent)" stroke-width="12" stroke-linecap="round"
+      stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 66 66)"/>
+    <text x="66" y="74" text-anchor="middle" fill="var(--ink)" font-family="JetBrains Mono, monospace" font-weight="700" font-size="30">${v}</text></svg>`;
+}
+function showResults(res,isFull){
+  clearTimers();
+  const keys=Object.keys(res);const pbs=new Set();
+  const B=best[diff];
+  for(const k of keys){if(B[k]==null||res[k]>B[k]){B[k]=res[k];pbs.add(k);}}
+  const total=Math.round(keys.reduce((s,k)=>s+res[k],0)/keys.length);
+  let newOverall=false;
+  if(isFull&&(B.overall==null||total>B.overall)){B.overall=total;newOverall=true;}
+  save();renderBestOverall();
+  const saving=recordPlay({mode:isFull?'full':keys[0],diff,score:total,parts:{...res}});
+  const [,lvl,msg]=levelFor(total);
+  const title=isFull?lvl:`${GAMES[keys[0]].name}: ${lvl.toLowerCase()}`;
+  app.innerHTML='';
+  const p=$(`<section class="panel res">
+    <div class="score-hero">${dial(total)}<div><div class="step" style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">${isFull?'Brain score':'Puzzle score'} · ${DIFFS[diff].name}${newOverall||(!isFull&&pbs.size)?' · new personal best':''}</div><h2>${title}</h2><p>${msg}</p></div></div>
+    <div class="rows">${keys.map(k=>`<div class="row${pbs.has(k)?' pb':''}"><span>${GAMES[k].name}</span><span class="track"><i style="width:${res[k]}%"></i></span><span class="n mono">${res[k]}</span></div>`).join('')}</div>
+    <div class="actions"><button class="btn" type="button" id="again">Play again</button><button class="btn ghost" type="button" id="menu">Back to puzzles</button></div>
+  </section>`);
+  saving.then(st=>{
+    if(st!=='need-name'&&st!=='bad-code')return;
+    const f=$(`<form class="nickform"><label for="nickInput2">Save this score to the team board</label><input id="nickInput2" maxlength="30" placeholder="Your name" autocomplete="nickname"><input id="codeInput2" maxlength="40" placeholder="Team code" autocomplete="off" style="max-width:160px"><button class="btn" type="submit">Save score</button><span class="ok" hidden></span></form>`);
+    f.querySelector('#nickInput2').value=myNick;f.querySelector('#codeInput2').value=teamCode;
+    f.addEventListener('submit',async e=>{e.preventDefault();const v=cleanNick(f.querySelector('#nickInput2').value),c=f.querySelector('#codeInput2').value.trim();if(!v||!c)return;
+      const r=await saveIdentity(v,c);const ok=f.querySelector('.ok');ok.hidden=false;
+      if(r==='ok'){ok.textContent='Saved to the board';ok.style.color='';f.querySelector('button').disabled=true;}
+      else{ok.textContent=r==='bad-code'?'Wrong team code':'Could not save. Try again later';ok.style.color='var(--bad)';}});
+    p.querySelector('.actions').before(f);
+  });
+  p.querySelector('#again').onclick=()=>runSeries(keys);
+  const up={easy:'medium',medium:'hard'}[diff];
+  if(up&&total>=65){const b=$(`<button class="btn ghost" type="button">Try ${DIFFS[up].name} level</button>`);
+    b.onclick=()=>{diff=up;save();runSeries(keys);};p.querySelector('.actions').insertBefore(b,p.querySelector('#menu'));}
+  p.querySelector('#menu').onclick=home;
+  app.append(p);
+}
+
+home();
+connect();
+})();
+</script>
+
+</body>
+</html>
